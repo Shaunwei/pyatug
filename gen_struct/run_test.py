@@ -1,7 +1,7 @@
 import ast
 import gen_struct
 
-f = open("NewA.py")
+f = open("../test/NewA.py")
 
 s = ast.parse(f.read())
 s = ast.fix_missing_locations(s)

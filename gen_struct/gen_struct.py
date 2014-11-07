@@ -1,3 +1,23 @@
+'''
+this function will return a structure object from the parse tree
+
+usage:
+
+import ast
+import gen_struct
+
+f = open("../test/NewA.py")
+
+s = ast.parse(f.read())
+
+p = gen_struct.print_code()
+
+# returns the structure
+p.print_node(s)
+
+
+
+'''
 import ast
 from _ast import Add
 from _ast import Sub
@@ -94,13 +114,17 @@ class print_code():
     def format_line(self, str):
         return self.ident_with * self.identation + str
 
+    # this call will go through the child node and returns the structure
     def print_node(self, node):
         if hasattr(node, "body"):
             method = 'visit_' + node.__class__.__name__
             result = getattr(self, method)
             return result(node)
         else:
-            return node
+            if node.__class__.__name__ == 'Expr':
+                return self.visit_Expr(node)
+            else:
+                return node
 
     def body(self, nodes):
         self.identation += 1
@@ -141,7 +165,6 @@ class print_code():
         r = [node]
         for b in self.body(node.body):
             r.append(b)
-        print '1r', r
         result.append(r)
 
         if(len(node.orelse) == 0):
@@ -149,15 +172,14 @@ class print_code():
         elif len(node.orelse) == 1 and isinstance(node.orelse[0], If):
             node_el = node.orelse[0]
             for b in self.visit_If(node_el):
-                print '2r', r
                 result.append(b)
         else:
             # print node.orelse[0]
             r = []
             for b in self.body(node.orelse):
                 r.append(b)
-            print 'er', r
             result.append(r)
-
-        print "\nwe get",result
         return result
+
+    def visit_Expr(self, node):
+        return node.value
