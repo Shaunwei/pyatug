@@ -137,3 +137,8 @@ tramp
 Session.vim
 .netrwhist
 *~
+
+
+# local 
+__init__.py
+.gitignore
