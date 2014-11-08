@@ -137,6 +137,7 @@ def get_ast_from(file_name):
 
 
 def get_docs_key_value_pairs(val_list):
+    # TODO: the failure path is not generated.
     '''
     type val: list
     params: form dictionary from val based on seperator
@@ -348,7 +349,8 @@ class _DecisionMaker(__DecisionEngine):
 
     def _prepare(self):
         '''Prepare paths and decision engine'''
-        self._prepare_scope()
+#        self._prepare_scope()
+        pass
 
     def _prepare_scope(self):
         '''Store args and kwargs'''
