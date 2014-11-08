@@ -45,6 +45,7 @@ import helpers
 import unittest
 import mock
 from exceptions import *
+import os
 
 
 #####
@@ -124,11 +125,17 @@ PARENTS = {
 # [('return', '', '=', '123')]
 RE_PARSER = re.compile(r"\[(?P<type>\w+) ?(?P<key>\w+)?\@(?P<equal>\=?) (?P<value>[\w ]+)\]")
 
+TEST_FILE_DIR = "./test"
+TEST_FILE_NAME = "NewA.py"
+UNIT_TEST_FILE_NAME = "NewA_test.py"
+
 def get_ast_from(file_name):
     '''
     type filename: str
     params: given source file name return ast
     '''
+
+
     with open(file_name) as f:
         source_ast = ast.parse(''.join(f.readlines()))
 
@@ -482,9 +489,10 @@ class AutoUnitGen(object):
     '''
     # use file name temp to keep track file
     def __init__(self, file_name, test_file_name):
-        # TODO: hard code for now
-        self.file_ast = get_ast_from('NewA.py')
-        self.ufile_ast = get_ast_from('NewA_test.py')
+        test_file_ast = os.path.join(TEST_FILE_DIR, TEST_FILE_NAME)
+        test_ufile_ast = os.path.join(TEST_FILE_DIR,UNIT_TEST_FILE_NAME)
+        self.file_ast = get_ast_from(test_file_ast)
+        self.ufile_ast = get_ast_from(test_ufile_ast)
         # TODO: add magic writer for now
 #        self.test_writer = open(test_file_name, 'w')
         self.prepare()
@@ -530,7 +538,8 @@ def get_test_data():
     dic = {}
     lis = []
 
-    astree = get_ast_from('NewA.py')
+    test_file_ast = os.path.join(TEST_FILE_DIR, TEST_FILE_NAME)
+    astree = get_ast_from(test_file_ast)
     # magic matching func
     class_node = astree.body[-1]
     func_node = class_node.body[-1]
