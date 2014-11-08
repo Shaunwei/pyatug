@@ -569,7 +569,7 @@ def get_test_data():
 
 if __name__ == '__main__':
     a = AutoUnitGen('NewA.py', 'NewA_test.py')
-
+#EndOfFile
 
 
 
