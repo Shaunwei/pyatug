@@ -12,7 +12,6 @@ class _NodeUnderTestParser(__ASTNodeParser):
             self.func_name = ast_node.name
         except:
             raise WrongTypeError('Node:%s does not have name attr.' %ast_node)
-        self.paths = get_test_data() #(func_node, paths_list,)
 
     def get_node_paths(self):
-        return self.paths
+        return self.get_paths()

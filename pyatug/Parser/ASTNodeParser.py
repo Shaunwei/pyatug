@@ -1,5 +1,6 @@
 import ast
 from ..exceptions import *
+from ..StructGen.StructGen import PathGen
 
 # Base Parser
 class __ASTNodeParser(object):
@@ -13,3 +14,12 @@ class __ASTNodeParser(object):
             raise WrongTypeError('Need to input a ast node instance.')
         else:
             self.ast = ast_node
+
+    def get_paths(self):
+        '''
+        Based on ast tree, get all paths from it
+        :return: paths list
+        # each path is a list of ast node
+        '''
+        self.paths = PathGen(self.ast).get_paths()
+        return self.paths

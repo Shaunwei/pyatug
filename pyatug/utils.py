@@ -3,6 +3,7 @@ import ast
 import unittest
 import mock
 from exceptions import *
+from StructGen.StructGen import PathGen
 
 ##
 # >>> s = args:[type value@ str]  [params value@= random input]
@@ -51,13 +52,6 @@ def get_docs_key_value_pairs(val_list):
         raise EmptyValueError('No docstrings found.')
 
 
-def parse_pass_conditions(ast_node):
-    '''
-    type ast_node: ast.AST
-    params: 
-    '''
-    pass
-
 
 def get_supported_funcs_map_dict(cls):
     '''
@@ -89,6 +83,18 @@ def get_supported_funcs_map_dict(cls):
         raise AutoUnitGeneratorBaseException('Not dic has valid value.')
 
     return dic
+
+
+def get_paths_from(ast_node):
+    '''
+    :param ast_node:
+    :return: all data paths from that node
+    '''
+    try:
+        _path_gen = PathGen(ast_node)
+        return _path_gen.get_paths()
+    except Exception, e:
+        raise AutoUnitGeneratorBaseException('Paths generate fail.')
 
 
 ### helpers
