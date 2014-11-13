@@ -1,22 +1,5 @@
 '''
 this function will return a structure object from the parse tree
-
-usage:
-
-import ast
-import gen_struct
-
-f = open("../test/NewA.py")
-
-s = ast.parse(f.read())
-
-p = gen_struct.print_code()
-
-# returns the structure
-p.print_node(s)
-
-
-
 '''
 import ast
 from _ast import Add
@@ -92,15 +75,23 @@ def get_children(node):
     return [x for x in ast.iter_child_nodes(node)]
 
 
-class print_code():
+class PathGen(object):
 
-    def __init__(self):
+    def __init__(self, ast_node):
         self.identation = 0
+        self.ast = ast_node
 
     def debug(self, str):
         debug = False
         if(debug):
             print str
+
+    def get_paths(self):
+        '''
+        API
+        :return: paths list
+        '''
+        return self.print_node(self.ast)
 
     def print_node_string(self, node):
         self.ident_with = "    "
